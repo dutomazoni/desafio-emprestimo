@@ -1,6 +1,6 @@
 openapi: '3.0.1'
 info:
-  title: RoTAS
+  title: Rotas
   termsOfService: http://swagger.io/terms/
   contact:
     email: dutomazoni@gmail.com
