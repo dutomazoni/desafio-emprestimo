@@ -1,0 +1,113 @@
+openapi: '3.0.1'
+info:
+  title: RoTAS
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: dutomazoni@gmail.com
+  version: '1.0'
+servers:
+  - url: http://localhost:5001
+tags:
+  - name: Empréstimo
+    description: Rotas relacionadas aos empréstimos.
+
+paths:
+  /emprestimo:
+    post:
+      tags:
+        - Empréstimo
+      summary: Adiciona uma simulação a base de dados.
+      description: Formato do request - http://localhost:5001/emprestimo
+      operationId: postSimulation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                uf:
+                  type: string
+                nasc:
+                  type: string
+                valor:
+                  type: number
+                num_parcelas:
+                  type: number
+              example:
+                cpf: 'cpf_teste'
+                uf: "MG"
+                nasc: '01/01/1970'
+                valor: 120000
+                num_parcelas: 15
+      responses:
+        201:
+          description: Retorna o valor da parcela e os dados da simulação.
+          content:
+            application/json:
+              examples:
+                postSimulation:
+                  value:
+                    {
+                      "valor_parcela": 9287.75164295999,
+                      "emprestimo": {
+                        "cpf": "cpf_teste",
+                        "uf": "MG",
+                        "nasc": "01/01/1970",
+                        "valor": 120000,
+                        "num_parcelas": 15,
+                        "valor_parcela": 9287.75164295999,
+                        "juros": 0.01
+                      }
+                    }
+  /finalizar:
+    post:
+      tags:
+        - Empréstimo
+      summary: Adiciona um empréstimo finalizado na base de dados.
+      description: Formato da requisição - http://localhost:5001/finalizar
+      operationId: postLoan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                valor_parcela:
+                  type: number
+                valor_requerido:
+                  type: number
+                valor_total:
+                  type: number
+                num_parcelas:
+                  type: number
+                juros:
+                  type: number
+              example:
+                cpf: "cpf_teste"
+                valor_parcela: 12345
+                valor_requerido: 120000
+                valor_total: 12345677890
+                num_parcelas: 15
+                juros: 0.1
+      responses:
+        201:
+          description: Returns the user.
+          content:
+            application/json:
+              examples:
+                getUser:
+                  value:
+                    {
+                      "efetivado": {
+                        "cpf": "cpf_teste",
+                        "valor_parcela": 12345,
+                        "valor_requerido": 120000,
+                        "valor_total": 12345677890,
+                        "num_parcelas": 15,
+                        "juros": 0.1
+                      }
+                    }
